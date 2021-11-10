@@ -13,6 +13,7 @@ import argparse
 import json
 import sys
 import os
+import syslog
 
 from bs4 import BeautifulSoup
 from sphinxsearch.common.clients import Searchclient, create_index
@@ -187,8 +188,10 @@ def main():
         post_count=args.post_count,
         variant=args.variant
     )
-    console.log(str(response['uploaded_files']) + ' new files successfully imported'
-          ' to index ' + args.index)
+    syslog.syslog(
+        syslog.LOG_INFO,
+        'Opensearch: ' + str(response['uploaded_files'])
+        + ' new files successfully imported to index ' + args.index)
 
 
 if __name__ == "__main__":
